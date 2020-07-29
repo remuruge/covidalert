@@ -42,11 +42,13 @@ def user_search():
 def get_users():
     # users = request.form.get('userList')
     # users = request.get_json()
-    r = requests.get('http://localhost:8080/users')
+    user_host = os.getenv('USER_SERVICE_ENDPOINT',default='host.docker.internal:8080')
+    r = requests.get('http://'+ user_host +'/users',verify=False)
     return r.json()
 
 def get_visits():
-    r = requests.get('http://localhost:3000/visits?date=2020-07-28')
+    visit_host = os.getenv('VISIT_SERVICE_ENDPOINT', default='host.docker.internal:3000')
+    r = requests.get('http://'+ visit_host + '/visits?date=2020-07-28',verify=False)
     return r.json()
 
 def get_aymptomatic(userList, email):

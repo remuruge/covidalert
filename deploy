@@ -1,4 +1,8 @@
 #!/bin/bash
 #docker build --tag covid_service .
 docker build -t covid_service .
-docker run -d -p 5000:5000 covid_service
+#docker run -p 5000:5000 covid_service
+docker tag covid_service gcr.io/datanauts/covid_service
+docker push gcr.io/datanauts/covid_service
+gcloud container clusters get-credentials cluster-1 --zone us-central1-c --project datanauts
+kubectl apply -f ./covid_service.yml

@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: covid-search-deployment
+  labels:
+    app: covid-search
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: covid-search
+  template:
+    metadata:
+      labels:
+        app: covid-search
+    spec:
+      containers:
+        - name: covid-search
+          image: gcr.io/datanauts/covid_service:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5000
+              name: covid-search
+          env:
+            - name: USER_SERVICE_ENDPOINT
+              value: userservice
+            - name: VISIT_SERVICE_ENDPOINT
+              value: branch-visits
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: covid-search
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: covid-search
+  selector:
+    app: covid-search
