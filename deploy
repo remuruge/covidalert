@@ -1,4 +1,4 @@
 #!/bin/bash
 #docker build --tag covid_service .
 docker build -t covid_service .
-docker run -p 5000:5000 covid_service
+docker run -d -p 5000:5000 covid_service

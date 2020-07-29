@@ -97,4 +97,5 @@ def create_data():
 if __name__ == '__main__':
     app.logger.setLevel(logging.INFO)
     data = create_data()
-    app.run(debug=True)
+    port = os.getenv('PORT')
+    app.run(debug=True, host='0.0.0.0', port=port)
